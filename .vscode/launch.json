@@ -15,7 +15,7 @@
             ],
             "jinja": true,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}"
+                "PYTHONPATH": "${workspaceFolder}/groceries-plugin"
             }
         }
     ]
