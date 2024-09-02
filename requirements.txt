@@ -1,4 +1,3 @@
-fastapi
-redis
-types-redis
-uvicorn
+pyspark
+numpy
+pandas
