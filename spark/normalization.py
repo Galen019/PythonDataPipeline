@@ -16,6 +16,8 @@ def normalize_dataframe(df):
     print("Normalized DataFrame:")
     df_normalized.show()
 
+    return df_normalized
+
 
 if __name__ == "__main__":
     # Initialize Spark session
