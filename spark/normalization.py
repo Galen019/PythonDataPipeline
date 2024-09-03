@@ -1,8 +1,8 @@
-from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql.functions import col, min as spark_min, max as spark_max
 
 
-def normalize_dataframe(df):
+def normalize_dataframe(df: DataFrame) -> DataFrame:
     # Compute the minimum and maximum values of the "Value" column
     min_value = df.select(spark_min(col("Value"))).collect()[0][0]
     max_value = df.select(spark_max(col("Value"))).collect()[0][0]
@@ -21,14 +21,14 @@ def normalize_dataframe(df):
 
 if __name__ == "__main__":
     # Initialize Spark session
-    spark = (
+    spark: SparkSession = (
         SparkSession.builder.appName("ExampleApp")  # type: ignore
         .master("spark://localhost:7077")
         .getOrCreate()
     )
 
     data = [(i,) for i in range(1001)]
-    df = spark.createDataFrame(data, ["Value"])
+    df: DataFrame = spark.createDataFrame(data, ["Value"])
 
     # Cache dataframe so subsequent operations are faster
     df.cache()

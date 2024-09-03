@@ -2,3 +2,4 @@ pyspark
 numpy
 pandas
 pytest
+scikit-learn

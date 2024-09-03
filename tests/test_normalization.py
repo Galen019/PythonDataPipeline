@@ -1,4 +1,3 @@
-import os
 import unittest
 from pyspark.sql import SparkSession
 from spark.normalization import normalize_dataframe
