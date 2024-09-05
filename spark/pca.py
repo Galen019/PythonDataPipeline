@@ -21,6 +21,13 @@ data = [
 # Create a DataFrame
 df: DataFrame = spark.createDataFrame(data, ["id", "features"])
 
+# Introduce some missing values for demonstration
+data[5] = (5, Vectors.dense([np.nan] * 300))
+
+# Data Sanitization
+# 1. Remove rows with missing values
+df_cleaned = df.filter(~col("features").isNull())
+
 # Perform PCA to reduce dimensions to 2
 pca = PCA(k=2, inputCol="features", outputCol="pca_features")
 model = pca.fit(df)
