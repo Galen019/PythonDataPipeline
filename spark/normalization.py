@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession, DataFrame
-from pyspark.sql.functions import col, min as spark_min, max as spark_max
+from pyspark.sql.functions import col, min as spark_min, max as spark_max, mean, stddev
 
 
 def normalize_dataframe(df: DataFrame) -> DataFrame:
@@ -15,6 +15,23 @@ def normalize_dataframe(df: DataFrame) -> DataFrame:
     # Show the normalized DataFrame
     print("Normalized DataFrame:")
     df_normalized.show()
+
+    return df_normalized
+
+
+def standardize_datafram(df: DataFrame) -> DataFrame:
+    mean_value = df.select(mean(col("Value"))).collect()[0][0]
+    stddev_value = df.select(stddev(col("Value"))).collect()[0][0]
+
+    df_normalized = df.withColumn(
+        "ZScoreNormalizedValue", (col("Value") - mean_value) / stddev_value
+    )
+
+    # Show the normalized DataFrame
+    print("Normalized DataFrame:")
+    df_normalized.filter(
+        (col("Value") == 0) | (col("Value") == 1000) | (col("Value") == 500)
+    ).select("Value", "ZScoreNormalizedValue").show()
 
     return df_normalized
 
@@ -40,6 +57,6 @@ if __name__ == "__main__":
     # Show the number of partitions
     print("Number of partitions:", df.rdd.getNumPartitions())
 
-    normalize_dataframe(df)
+    standardize_datafram(df)
 
     spark.stop()
