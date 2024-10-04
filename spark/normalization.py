@@ -28,7 +28,7 @@ def standardize_datafram(df: DataFrame) -> DataFrame:
     )
 
     # Show the normalized DataFrame
-    print("Normalized DataFrame:")
+    print("Standardized DataFrame:")
     df_normalized.filter(
         (col("Value") == 0) | (col("Value") == 1000) | (col("Value") == 500)
     ).select("Value", "ZScoreNormalizedValue").show()
